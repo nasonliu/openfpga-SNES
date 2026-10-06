@@ -1,0 +1,125 @@
+{
+  "recipes": {
+    "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887": {
+      "current": {
+        "bytes": 40900,
+        "git_blob_sha": "e85073e0ef560beb7a9b2e27be389a51ffd8d835",
+        "sha256": "9da18d7bae1de1b075d1f9d7ffa634614de063ebbce12e79e1fa43544c68274a"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887.patch",
+      "patch_sha256": "0e4150cc1ccbe9865b59347b00a4b5f4c7dddf53e9b38f59772572b975672eba",
+      "source_path": "rtl/mister_top/SNES.sv"
+    },
+    "11daa31dc309164662631681461a11314414cbeb0750cf3acd85e28c0b3c3830": {
+      "current": {
+        "bytes": 6889,
+        "git_blob_sha": "d9762153c78d537ea858b03ba6dd20ccaeb8c345",
+        "sha256": "77fe2c3c8c606483488a6d302fdc5c7c4de48aeabac1e4772b66f9142b5b12bc"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/11daa31dc309164662631681461a11314414cbeb0750cf3acd85e28c0b3c3830.patch",
+      "patch_sha256": "520054d156deeff65aad62dd87360c844f03bf5fececb693c721a9c0f73e1d98",
+      "source_path": "tools/build_msu1.sh"
+    },
+    "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066": {
+      "current": {
+        "bytes": 41171,
+        "git_blob_sha": "bb3899ac2f0be7054d8048263b91619fdc04c9ed",
+        "sha256": "1717a1076366f25cf75c565deda66f5b2041583e525b9b196df87d404934ad65"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066.patch",
+      "patch_sha256": "8da8697d7420260d38bd8d2a093096864ce44a171226006c3c16c5b97e307a2d",
+      "source_path": "rtl/upstream/main.v"
+    },
+    "312e90f9b5b5005ff8232869b61a585a5773a022ae96b2f71df89e2901f012a5": {
+      "current": {
+        "bytes": 3774,
+        "git_blob_sha": "38ee5ccd2ac0b25093876d1b8daceb4a49b7dbdb",
+        "sha256": "c05923bddaf02fd35c68f1d3777d3a88b0bdf35d1f3a0947b53b2c6b33612e40"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/312e90f9b5b5005ff8232869b61a585a5773a022ae96b2f71df89e2901f012a5.patch",
+      "patch_sha256": "b3b5de67d426f76ec18e051677a9f8accee0d7f4cf588851931ef3628c78ea64",
+      "source_path": "target/pocket/sram.sv"
+    },
+    "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c": {
+      "current": {
+        "bytes": 11668,
+        "git_blob_sha": "64ad0bcf6e4c1ae2228168a5f137f293eecb56da",
+        "sha256": "ebf00ea49480562f3d541a77da1ceea39fd9c0549061c283b9671c1f011d7352"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c.patch",
+      "patch_sha256": "68eff8b2a3f8f996fd07bcbfad317e65ed879f64a041b766d214019f5dbda5bb",
+      "source_path": "rtl/upstream/savestates.sv"
+    },
+    "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1": {
+      "current": {
+        "bytes": 12554,
+        "git_blob_sha": "fa8e9ef7edad96b128158f73a63afb27c1f3b523",
+        "sha256": "d22a27a6b4b02858bed95baf2c4ccbaccd97172d9fbaa7974b61b00c64e559a2"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1.patch",
+      "patch_sha256": "ba1163cae12d4085d096e862e7e96f9afb5dd9823f475a9cc5e54506fe85b555",
+      "source_path": "rtl/upstream/SNES.vhd"
+    },
+    "8655e44e28790376ab8e47a4d936a1f6dd8b781130b7af39e0bb2374b336b371": {
+      "current": {
+        "bytes": 41171,
+        "git_blob_sha": "bb3899ac2f0be7054d8048263b91619fdc04c9ed",
+        "sha256": "1717a1076366f25cf75c565deda66f5b2041583e525b9b196df87d404934ad65"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/8655e44e28790376ab8e47a4d936a1f6dd8b781130b7af39e0bb2374b336b371.patch",
+      "patch_sha256": "4f92edb8ed0c684df82985ec6bf9c93ee4d11d2c855c4ddeef4578c10272d224",
+      "source_path": "rtl/upstream/main.v"
+    },
+    "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1": {
+      "current": {
+        "bytes": 2883,
+        "git_blob_sha": "a1c04dcb540d1b3271edefebd8ad161e3a724ed8",
+        "sha256": "51fb1c7055a89be88e1b4deea8584d2a22578868537a17dfb0dd6eddf5ffffe5"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1.patch",
+      "patch_sha256": "822d2db43d27ac28cd35d087d83211a75617d3fbd220cce6138cc63d07e4a6ef",
+      "source_path": "target/pocket/core.qip"
+    },
+    "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33": {
+      "current": {
+        "bytes": 44760,
+        "git_blob_sha": "807f142075b3cb5915e097129ef136718bab83d3",
+        "sha256": "91c86a42df22db18b63588363ebedc0d33ad51425ba385cdf70fe240f38d2427"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33.patch",
+      "patch_sha256": "d9929814842ce8e625e1a4c997e11b80e289b00e40e5677cbcefd90daf7c5b68",
+      "source_path": "target/pocket/core_top.sv"
+    },
+    "a20af00183608cdfeb83aa56c311cef8c056f5ff44a38228746c740b4825c6a1": {
+      "current": {
+        "bytes": 11668,
+        "git_blob_sha": "64ad0bcf6e4c1ae2228168a5f137f293eecb56da",
+        "sha256": "ebf00ea49480562f3d541a77da1ceea39fd9c0549061c283b9671c1f011d7352"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/a20af00183608cdfeb83aa56c311cef8c056f5ff44a38228746c740b4825c6a1.patch",
+      "patch_sha256": "70869151735cfe553a3f6dee6ae62b390f1381c8c831c5799c1f807ce5c7311c",
+      "source_path": "rtl/upstream/savestates.sv"
+    },
+    "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378": {
+      "current": {
+        "bytes": 44372,
+        "git_blob_sha": "cfb6534ed5c212cf51c6747011a1963263b561b5",
+        "sha256": "4a5df8e4dbb125c52411db5f1898621170716fab014cc08b5a51cb0b788f0702"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378.patch",
+      "patch_sha256": "252832fa7c2b7345ac4d7f279407d068140a6872b906b4fb6b687d1d67df04ec",
+      "source_path": "rtl/upstream/CPU.vhd"
+    },
+    "da4c707b664b6c1e239ecb203359a73b0c3106332b26ff6edc23e90b553dbf89": {
+      "current": {
+        "bytes": 7807,
+        "git_blob_sha": "bea3a8f11f5690685e3099e36c7ddc5c63b928da",
+        "sha256": "7bbe8eded9fbdab98bd4744e5da852c39772d5e9815338a3a1daef000f2b9acb"
+      },
+      "patch_path": "tests/fixtures/savestate_patches/da4c707b664b6c1e239ecb203359a73b0c3106332b26ff6edc23e90b553dbf89.patch",
+      "patch_sha256": "90541c4e3e67d7e2b25cdf31014ba3695b67ce95a3e712c279c64a5a7705870d",
+      "source_path": "generate.tcl"
+    }
+  },
+  "schema": 1
+}

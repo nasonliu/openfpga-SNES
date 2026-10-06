@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "purpose": "Test-only predecode source preservation baseline; not a reconstructed Git commit or a complete build tree.",
+  "source_revision": "9e1fb498fa6ee75f5e88e3d63085c3f813f161c2",
+  "files": [
+    {
+      "path": "rtl/upstream/CPU.vhd",
+      "bytes": 43776,
+      "sha256": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378",
+      "git_blob_sha": "3d7afe5c6f0e401a48fdd4d9199b5c6b84e86976",
+      "patch_recipe": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378"
+    },
+    {
+      "path": "rtl/upstream/SNES.vhd",
+      "bytes": 12478,
+      "sha256": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1",
+      "git_blob_sha": "adfa7e2dd55bf581ceaae27e72347df4994953e6",
+      "patch_recipe": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1"
+    },
+    {
+      "path": "rtl/upstream/main.v",
+      "bytes": 41045,
+      "sha256": "8655e44e28790376ab8e47a4d936a1f6dd8b781130b7af39e0bb2374b336b371",
+      "git_blob_sha": "052ff9240fe963741d9a2505213fcc08e204fc29",
+      "patch_recipe": "8655e44e28790376ab8e47a4d936a1f6dd8b781130b7af39e0bb2374b336b371"
+    },
+    {
+      "path": "rtl/upstream/savestates.sv",
+      "bytes": 11485,
+      "sha256": "a20af00183608cdfeb83aa56c311cef8c056f5ff44a38228746c740b4825c6a1",
+      "git_blob_sha": "6ee581ae933bf912472a08fba10184cc17b225f1",
+      "patch_recipe": "a20af00183608cdfeb83aa56c311cef8c056f5ff44a38228746c740b4825c6a1"
+    }
+  ]
+}

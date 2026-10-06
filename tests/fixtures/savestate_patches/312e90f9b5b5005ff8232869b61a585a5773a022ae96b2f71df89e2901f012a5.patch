@@ -1,0 +1,87 @@
+diff --git a/target/pocket/sram.sv b/target/pocket/sram.sv
+index 8ee93b5..38ee5cc 100644
+--- a/target/pocket/sram.sv
++++ b/target/pocket/sram.sv
+@@ -48,7 +48,11 @@ module sram #(
+   localparam INIT_STATE = 0;
+   localparam WAIT_STATE = 1;
+ 
+-  reg state = 0;
++  localparam HOLD_STATE = 2;
++  localparam RECOVER_STATE = 3;
++  localparam WRITE_SETUP_STATE = 4;
++  reg [1:0] pending_mask = 0;
++  reg [2:0] state = 0;
+ 
+   assign ready = state == INIT_STATE;
+ 
+@@ -57,6 +61,7 @@ module sram #(
+       q <= 16'h0;
+       state <= INIT_STATE;
+       wait_counter <= 0;
++      pending_mask <= 0;
+       use_write <= 0;
+ 
+       sram_a <= 17'h0;
+@@ -75,19 +80,20 @@ module sram #(
+           sram_lb_n <= 1'b1;
+ 
+           if (wr) begin
+-            state <= WAIT_STATE;
++            state <= WRITE_SETUP_STATE;
+             wait_counter <= CYCLES_PER_OP;
+ 
+             sram_a <= addr;
+             current_write_data <= data;
+             use_write <= 1'b1;
+ 
++            // Establish address/data while every write-opening control is high.
+             sram_oe_n <= 1'b1;
+-            sram_we_n <= 1'b0;
+-            {sram_ub_n, sram_lb_n} <= ~mask;
++            pending_mask <= mask;
+           end else if (rd) begin
+             state <= WAIT_STATE;
+-            wait_counter <= CYCLES_PER_OP;
++            // One extra read clock covers routed byte-enable and DQ setup.
++            wait_counter <= CYCLES_PER_OP + 1;
+ 
+             sram_a <= addr;
+             use_write <= 1'b0;
+@@ -101,14 +107,14 @@ module sram #(
+           if (wait_counter > 0) begin
+             wait_counter <= wait_counter - 4'h1;
+           end else begin
+-            state <= INIT_STATE;
++            state <= HOLD_STATE;
+             // End every access before the next address can be accepted.
+             // Level-held writes must still have a full idle clock between WE pulses.
+             sram_we_n <= 1'b1;
+             sram_oe_n <= 1'b1;
+             sram_ub_n <= 1'b1;
+             sram_lb_n <= 1'b1;
+-            use_write <= 1'b0;
++            // Hold the last write byte through the complete next clock.
+ 
+             if (~use_write) begin
+               // Completed read, grab data
+@@ -116,6 +122,19 @@ module sram #(
+             end
+           end
+         end
++        WRITE_SETUP_STATE: begin
++          sram_we_n <= 1'b0;
++          {sram_ub_n, sram_lb_n} <= ~pending_mask;
++          wait_counter <= CYCLES_PER_OP;
++          state <= WAIT_STATE;
++        end
++        HOLD_STATE: begin
++          use_write <= 1'b0;
++          state <= RECOVER_STATE;
++        end
++        RECOVER_STATE: begin
++          state <= INIT_STATE;
++        end
+       endcase
+     end
+   end

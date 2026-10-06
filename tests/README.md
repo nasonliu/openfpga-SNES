@@ -1,4 +1,52 @@
-# Test scope for the draft MSU-1 contribution
+# Source test scope
+
+## Plain-cartridge savestate experiment
+
+The new suites and generated original fixtures are under `tests/savestate_*`.
+Use installed tools on PATH; no simulator or vendor library is bundled.
+
+```sh
+python3 -m unittest discover -s tests -p test_savestate_sources.py -v
+python3 -m unittest discover -s tests -p test_build_msu1.py -v
+python3 tools/generate_savestate_rom.py
+python3 tests/savestate_identity/run.py
+bash tests/savestate_protocol/run.sh
+python3 tests/savestate_storage/run.py
+python3 tests/savestate_storage/run_request_stage.py
+python3 tests/savestate_storage/run_pin_hold.py
+python3 tests/savestate_storage/run_sram_clear.py --request-stage
+python3 tests/savestate_storage/run_aram.py --request-stage
+tclsh tests/savestate_storage/test_sram_load_policy.tcl
+python3 tests/savestate_predecode/run.py
+python3 tests/savestate_stage1/run.py --build-only
+python3 tests/savestate_stage1/final_aram_variant/run.py
+```
+
+The predecode suite uses hash-checked exact reverse patches rather than
+inaccessible historical Git objects. Git is required on PATH; no .git directory
+is needed. Generated helper MIF/HEX files are ignored and recreated from the
+pinned helper before the source-integrity and real-core tests. The real-core harness generates its original LoROM/HiROM
+fixtures in the output directory. APF transport integration additionally needs
+your licensed Quartus model directory, supplied explicitly:
+
+```sh
+python3 tests/savestate_protocol/run_integration.py --vendor-sim-dir "$QUARTUS_ROOTDIR/eda/sim_lib"
+python3 tests/savestate_protocol/run_verilator.py --vendor-sim-dir "$QUARTUS_ROOTDIR/eda/sim_lib"
+```
+
+Read each suite's scope before interpreting a pass. These simulations are not
+Pocket hardware or external SRAM/PSRAM timing qualification. A source import
+alone is not evidence that every suite has passed on the current revision.
+
+## Incomplete battery-save session matrix
+
+`tests/savestate_backup_session/` preserves the earlier 14-case admission source.
+Its reduced bench still uses a constant upload ACK and does not validate the new
+host-native ACK interlock. State-first uploads, full 128 KiB/overflow rejection
+and registered slot-ID cases remain incomplete. This export did not rerun that
+matrix. Read its README before interpreting any old PASS result.
+
+## Existing MSU/packaging source tests
 
 From the repository root, these source tests are self-contained:
 

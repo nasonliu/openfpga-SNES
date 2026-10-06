@@ -1,0 +1,159 @@
+diff --git a/target/pocket/core_top.sv b/target/pocket/core_top.sv
+index 2085e48..807f142 100644
+--- a/target/pocket/core_top.sv
++++ b/target/pocket/core_top.sv
+@@ -293,12 +293,12 @@ module core_top (
+   //   assign dram_cas_n              = 'h1;
+   //   assign dram_we_n               = 'h1;
+ 
+-  assign sram_a                  = 'h0;
+-  assign sram_dq                 = {16{1'bZ}};
+-  assign sram_oe_n               = 1;
+-  assign sram_we_n               = 1;
+-  assign sram_ub_n               = 1;
+-  assign sram_lb_n               = 1;
++
++
++
++
++
++
+ 
+   assign dbg_tx                  = 1'bZ;
+   assign user1                   = 1'bZ;
+@@ -329,6 +329,7 @@ module core_top (
+     if (bridge_addr[31:28] == 4'h2) begin
+       bridge_rd_data <= sd_read_data;
+     end
++    if (USE_SS && bridge_addr[31:28] == 4'h4) bridge_rd_data <= ss_read_data;
+   end
+ 
+   always @(posedge clk_74a) begin
+@@ -441,15 +442,19 @@ module core_top (
+ 
+   wire dataslot_requestwrite;
+   wire [15:0] dataslot_requestwrite_id;
+-  wire dataslot_requestwrite_ack = 1;
++  // A state owner cannot drain an SRAM upload. Delay its ACK rather than
++  // allowing the host to overflow the finite save FIFO. Inspect only a
++  // registered request: its slot ID is stale on the first parser edge.
++  wire dataslot_requestwrite_ack = !USE_SS ? 1'b1 :
++      dataslot_requestwrite && (dataslot_requestwrite_id != 16'd10 || !ss_lock_host);
+   wire dataslot_requestwrite_ok = 1;
+ 
+   wire dataslot_allcomplete;
+ 
+-  wire savestate_supported = 0;
+-  wire [31:0] savestate_addr;
+-  wire [31:0] savestate_size;
+-  wire [31:0] savestate_maxloadsize;
++  wire savestate_supported = USE_SS && ss_avail_h && ss_identity_ready_h;
++  wire [31:0] savestate_addr = 32'h40000000;
++  wire [31:0] savestate_size = ss_payload_size + 32;
++  wire [31:0] savestate_maxloadsize = ss_payload_size + 32;
+ 
+   wire savestate_start;
+   wire savestate_start_ack;
+@@ -860,6 +865,68 @@ module core_top (
+   // MSU is an opt-in build profile; original profiles remain unchanged.
+   parameter USE_MSU_POCKET = 1'b0;
+   parameter MSU_DEBUG = 1'b0;
++  wire ss_save,ss_load,ss_ctrl_idle,ss_lock,ss_lock_host,ss_abort,ss_stage_clear;
++  wire ss_busy,ss_avail,ss_avail_h,ss_core_reset,ss_storage_fault;
++  wire ss_stage_lost,ss_stage_idle,ss_stage_complete,ss_transport_idle,ss_save_complete;
++  wire [31:0] ss_payload_checksum,ss_identity_h;
++  wire [16:0] ss_mounted_config_h;
++  wire [3:0] ss_mounted_ramsz=ss_mounted_config_h[15:12];
++  wire ss_identity_ready_h,ss_identity_ready_s;
++  wire ss_stage_wr,ss_blob_rd;
++  wire [19:0] ss_stage_addr,ss_blob_addr;
++  wire [15:0] ss_stage_data,ss_blob_q;
++  wire [31:0] ss_read_data;
++  wire [31:0] ss_payload_size = 32'h44000 + ((ss_mounted_ramsz!=0 && ss_mounted_ramsz<=7) ? (32'd1024<<ss_mounted_ramsz) : 0);
++  generate if(USE_SS) begin: g_savestates
++    wire stage_accept,header_select,blob_read_enable;
++    wire [31:0] header_data,blob_data;
++    wire [31:0] payload_bridge_addr = {4'h4,bridge_addr[27:0]-28'd32};
++    savestate_rom_identity identity(
++      .clk_sys(clk_sys_21_48),.clk_host(clk_74a),.reset_n(pll_core_locked),
++      .image_begin(ioctl_image_begin),.image_complete(ioctl_image_complete),.image_fault(ioctl_fault),
++      .write_en(ioctl_wr),.write_addr(ioctl_addr),.write_data(ioctl_dout),.image_config(ioctl_config),
++      .identity_host(ss_identity_h),.image_config_host(ss_mounted_config_h),.ready_host(ss_identity_ready_h),.ready_sys(ss_identity_ready_s));
++    synch_3 available_sync(ss_avail && !ss_core_reset,ss_avail_h,clk_74a, , );
++    data_loader #(.ADDRESS_MASK_UPPER_4(4'h4),.ADDRESS_SIZE(20),
++      .WRITE_MEM_CLOCK_DELAY(16),.OUTPUT_WORD_SIZE(2)) loader(
++      .clk_74a(clk_74a),.clk_memory(clk_mem_85_9),.bridge_wr(stage_accept),
++      .bridge_endian_little(bridge_endian_little),.bridge_addr(payload_bridge_addr),.bridge_wr_data(bridge_wr_data),
++      .write_en(ss_stage_wr),.write_addr(ss_stage_addr),.write_data(ss_stage_data));
++    data_unloader #(.ADDRESS_MASK_UPPER_4(4'h4),.ADDRESS_SIZE(20),
++      .READ_MEM_CLOCK_DELAY(24),.INPUT_WORD_SIZE(2),.SAFE_RESPONSE_HANDSHAKE(1)) unloader(
++      .clk_74a(clk_74a),.clk_memory(clk_mem_85_9),.reset_n(pll_core_locked),
++      .bridge_rd(blob_read_enable),.bridge_endian_little(bridge_endian_little),.bridge_addr(payload_bridge_addr),
++      .bridge_rd_data(blob_data),.read_en(ss_blob_rd),.read_addr(ss_blob_addr),.read_data(ss_blob_q));
++    assign ss_read_data=header_select ? header_data : blob_data;
++    savestate_controller controller(
++      .clk_74a(clk_74a),.clk_sys_21_48(clk_sys_21_48),.core_reset(ss_core_reset),
++      .bridge_rd(bridge_rd),.bridge_wr(bridge_wr),.bridge_endian_little(bridge_endian_little),
++      .bridge_addr(bridge_addr),.bridge_wr_data(bridge_wr_data),.payload_size(ss_payload_size),.rom_identity(ss_identity_h),
++      .savestate_load(savestate_load),.savestate_load_ack_s(savestate_load_ack),
++      .savestate_load_busy_s(savestate_load_busy),.savestate_load_ok_s(savestate_load_ok),.savestate_load_err_s(savestate_load_err),
++      .savestate_start(savestate_start),.savestate_start_ack_s(savestate_start_ack),
++      .savestate_start_busy_s(savestate_start_busy),.savestate_start_ok_s(savestate_start_ok),.savestate_start_err_s(savestate_start_err),
++      // The ordered queue fence ends at ACK, but the host's battery-save
++      // session owns RAM until dataslot_allcomplete. Block new state ownership
++      // for that whole interval; an already locked state still drains normally.
++      .ss_admit(ss_avail && !ss_core_reset && !queue_save_busy && !save_download_s && ss_identity_ready_s),
++      .ss_allow(ss_avail && !ss_core_reset && ss_identity_ready_s),
++      .ss_busy(ss_busy),.storage_fault(ss_storage_fault),.stage_lost(ss_stage_lost),
++      .stage_drained(ss_stage_idle),.stage_complete(ss_stage_complete),.engine_drained(ss_transport_idle),
++      .save_complete(ss_save_complete),
++      .saved_payload_checksum(ss_payload_checksum),.ss_save(ss_save),.ss_load(ss_load),.ss_idle(ss_ctrl_idle),
++      .ss_lock(ss_lock),.ss_lock_host(ss_lock_host),.ss_abort(ss_abort),.stage_clear(ss_stage_clear),.stage_clear_toggle74(),
++      .stage_accept(stage_accept),.header_select(header_select),.header_rd_data(header_data),
++      .blob_read_enable(blob_read_enable),.blob_size(),.protocol_error());
++  end else begin: g_no_savestates
++    assign ss_save=0;assign ss_load=0;assign ss_ctrl_idle=1;assign ss_lock=0;assign ss_lock_host=0;assign ss_abort=0;assign ss_stage_clear=0;
++    assign ss_avail_h=0;assign ss_identity_h=0;assign ss_mounted_config_h=0;assign ss_identity_ready_h=0;assign ss_identity_ready_s=0;
++    assign ss_stage_wr=0;assign ss_stage_addr=0;assign ss_stage_data=0;
++    assign ss_blob_rd=0;assign ss_blob_addr=0;assign ss_read_data=0;
++    assign savestate_load_ack=0;assign savestate_load_busy=0;assign savestate_load_ok=0;assign savestate_load_err=0;
++    assign savestate_start_ack=0;assign savestate_start_busy=0;assign savestate_start_ok=0;assign savestate_start_err=0;
++  end endgenerate
++
+   wire msu_init_busy, msu_enable, msu_soft_reset;
+   wire [31:0] msu_bridge_rd_data;
+   wire [15:0] msu_track_num;
+@@ -934,7 +1001,7 @@ module core_top (
+     assign msu_target_buffer_param_struct=0;assign msu_target_buffer_resp_struct=0;
+   end endgenerate
+ 
+-  MAIN_SNES #(.USE_MSU(USE_MSU_POCKET),.USE_STANDARD_SDRAM(USE_STANDARD_SDRAM)) snes (
++  MAIN_SNES #(.USE_MSU(USE_MSU_POCKET),.USE_STANDARD_SDRAM(USE_STANDARD_SDRAM),.USE_SS(USE_SS)) snes (
+       .clk_mem_85_9 (clk_mem_85_9),
+       .clk_sys_21_48(clk_sys_21_48),
+       .clk_sdram(clk_sdram),.pll_locked(pll_core_locked),
+@@ -1037,6 +1104,16 @@ module core_top (
+       .sd_buff_dout(sd_buff_dout),
+ 
+       .sram_size(sram_size),
++      .ss_save(ss_save),.ss_load(ss_load),.ss_ctrl_idle(ss_ctrl_idle),.ss_lock(ss_lock),
++      .ss_abort(ss_abort),.ss_stage_clear(ss_stage_clear),.ss_payload_size(ss_payload_size[19:0]),
++      .ss_busy(ss_busy),.ss_avail(ss_avail),.ss_core_reset(ss_core_reset),.ss_storage_fault(ss_storage_fault),
++      .ss_stage_lost(ss_stage_lost),.ss_stage_idle(ss_stage_idle),.ss_stage_complete(ss_stage_complete),
++      .ss_transport_idle(ss_transport_idle),.ss_payload_checksum(ss_payload_checksum),
++      .ss_save_complete(ss_save_complete),
++      .ss_stage_wr(ss_stage_wr),.ss_stage_addr(ss_stage_addr),.ss_stage_data(ss_stage_data),
++      .ss_blob_rd(ss_blob_rd),.ss_blob_addr(ss_blob_addr),.ss_blob_q(ss_blob_q),
++      .sram_a(sram_a),.sram_dq(sram_dq),.sram_oe_n(sram_oe_n),.sram_we_n(sram_we_n),
++      .sram_ub_n(sram_ub_n),.sram_lb_n(sram_lb_n),
+ 
+       // SDRAM
+       .dram_a(dram_a),
+@@ -1204,6 +1281,7 @@ module core_top (
+ 
+   parameter PAL_PLL = 1'b0;
+   parameter USE_STANDARD_SDRAM = 1'b0;
++  parameter USE_SS = 1'b0;
+ 
+   generate
+     if (USE_STANDARD_SDRAM && PAL_PLL) begin

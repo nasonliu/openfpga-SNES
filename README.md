@@ -5,19 +5,21 @@ Ported from the original core developed by [srg320](https://github.com/srg320) (
 Please report any issues encountered to this repo. Most likely any problems are a result of my port, not the original core. Issues will be upstreamed as necessary.
 
 > [!WARNING]
-> 
-> Savestates/Memories/Sleep not supported
->
-> This Pocket build does not enable Savestates, Memories or Sleep. Existing
-> MiSTer state RTL and Pocket controller code are not a complete, enabled
-> integration; their interfaces and state coverage need separate evaluation.
+> Experimental source branch. Savestates are enabled only by the explicit
+> `savestate_standard_ntsc` profile and are not hardware-qualified. Sleep is
+> disabled. Release/updater instructions below do not install this experiment.
 
-## Experimental MSU-1 work
+## Experimental work
 
-This branch adds experimental SD-streamed MSU-1 and standard-memory profiles.
-See [implementation, builds, tests, and hardware notes](docs/MSU1-STANDARD.md).
-It is a draft contribution; the existing release/updater instructions below do
-not install this experiment. Savestates, Memories and Sleep remain disabled.
+This branch adds a plain-cartridge NTSC savestate experiment on top of the
+[MSU-1 and standard-memory work](docs/MSU1-STANDARD.md). Start with the
+[savestate scope, format, tests and limitations](docs/SAVESTATE-STAGE1.md).
+It accepts ordinary LoROM/HiROM within the documented size limits, with MSU and
+enhancement chips disabled. Standard MSU profiles do not enable savestates.
+The native fit and same-placement conditional SRAM timing audit passed; see
+[the scope and assumptions](docs/SAVESTATE-STAGE1.md#native-build-and-conditional-sram-budget).
+The latest battery-save/state host-ACK interleaving matrix is incomplete, so
+this source is not ready for hardware delivery. No real-Pocket validation is claimed.
 
 ## Installation
 
@@ -59,12 +61,10 @@ BSX ROMs must be patched to run without BIOS. The BSX BIOS is not currently supp
 
 ### Savestates/Memories/Sleep
 
-> **Warning**: Not supported
-
-This Pocket build does not enable Savestates, Memories or Sleep. The repository
-contains state-related RTL, but presence of that code alone does not establish
-an enabled and complete implementation. This limitation is specific to this
-Pocket build and is not a statement about all FPGA SNES implementations.
+The experimental `savestate_standard_ntsc` source profile enables the APF
+savestate path for the plain-cartridge scope described above. It is not a
+release, Memories UI or Pocket hardware acceptance. Sleep remains disabled.
+All other profiles retain disabled state support.
 
 ### Video
 

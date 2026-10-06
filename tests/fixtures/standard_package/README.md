@@ -24,3 +24,19 @@ tests; none of their rejection or mutation assertions is removed. Separate
 real-Git tests exercise production commit/type/path/blob handling. The actual
 packaging CLI does not import this provider and still requires genuine Git
 evidence. This fixture does not make other historical HDL suites standalone.
+
+## Savestate branch independence
+
+The savestate branch modifies nine formerly shared checkout paths. Their exact
+pre-existing bytes are reconstructed with small reverse patches rather than
+large duplicated source files. The expected baseline bytes were verified from
+public base `44442443508356dbc362c6c34304a51cc5b5ba16` against every already
+registered size, SHA-256 and Git blob ID. These expected identities are unchanged.
+The original ten historical full-source fixture blobs are retained unchanged.
+
+The test-only reconstruction verifies current source and patch hashes, runs
+`git apply -R --check` and applies the reverse patch in a disposable directory
+with no `.git`, then validates the exact old bytes. The cache is keyed by complete
+source and patch bytes; hashes are checked on every call. No assertion, rejection
+oracle or hardware inventory is weakened. Production packaging does not use
+this helper and still requires authentic Git evidence.

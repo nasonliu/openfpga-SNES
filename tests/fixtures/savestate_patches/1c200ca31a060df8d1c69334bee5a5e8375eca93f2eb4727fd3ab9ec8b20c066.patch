@@ -1,0 +1,121 @@
+diff --git a/rtl/upstream/main.v b/rtl/upstream/main.v
+index 0416514..bb3899a 100644
+--- a/rtl/upstream/main.v
++++ b/rtl/upstream/main.v
+@@ -168,6 +168,7 @@ module main #(
+ 	input             SS_LOAD,
+ 	input       [1:0] SS_SLOT,
+ 	output            SS_AVAIL,
++	output            SS_BUSY,
+ 
+ 	input      [63:0] SS_DDR_DI,
+ 	input             SS_DDR_ACK,
+@@ -192,6 +193,7 @@ wire        RAMSEL_N;
+ wire        ROMSEL_N;
+ reg         IRQ_N;
+ wire  [7:0] PA;
++wire        PA_ARAM;
+ wire        PARD_N;
+ wire        PAWR_N;
+ //wire        SYSCLKF_CE;
+@@ -285,17 +287,60 @@ end endgenerate
+ generate if(USE_STANDARD_SDRAM) begin: passive_memory_ready
+     wire passive_selected = MAP_ACTIVE[6] ? SUFAMI_LOOKAHEAD_SEL :
+                             (MAP_ACTIVE==0 && DLH_LOOKAHEAD_SEL);
+-    wire [23:0] passive_address = MAP_ACTIVE[6] ? SUFAMI_LOOKAHEAD_ADDR : DLH_LOOKAHEAD_ADDR;
++    wire [23:0] passive_address = USE_SS && SS_ROM_OVR ? SS_ROM_ADDR :
++                                 MAP_ACTIVE[6] ? SUFAMI_LOOKAHEAD_ADDR : DLH_LOOKAHEAD_ADDR;
++    wire passive_req, passive_ready, passive_rsp_valid, passive_rsp_ready;
++    wire [15:0] passive_rsp_data;
++    wire [1:0] passive_rsp_owner;
++    wire [7:0] passive_rsp_tag, passive_rsp_epoch;
++    wire passive_rsp_error;
++    // The helper is an addressed ROM transaction, not a late mux on ROM_ADDR.
++    // The same client retains its identity and byte lane until SCPU retirement.
++    wire helper_offer = USE_SS && SS_BUSY && MC_ADDR[0][23:16] == 8'hff;
++    wire [15:0] helper_q;
++    reg [1:0] helper_delay = 0;
++    reg helper_valid = 0;
++    reg [1:0] helper_owner = 0;
++    reg [7:0] helper_tag = 0, helper_epoch = 0;
++    if(USE_SS) begin: helper_rom
++        boot1_rom rom(.clk(MCLK),.addr(MC_ADDR[0][11:0]),.word(1'b1),.q(helper_q));
++    end else begin: no_helper_rom
++        assign helper_q = 16'b0;
++    end
++    assign MC_VALID[0] = passive_req && !helper_offer;
++    assign passive_ready = helper_offer ? !helper_valid && helper_delay == 0 : MC_READY[0];
++    assign passive_rsp_valid = helper_valid || MC_RSP_VALID[0];
++    assign passive_rsp_data = helper_valid ? helper_q : MEM_RSP_DATA;
++    assign passive_rsp_owner = helper_valid ? helper_owner : MEM_RSP_OWNER[1:0];
++    assign passive_rsp_tag = helper_valid ? helper_tag : MEM_RSP_TAG;
++    assign passive_rsp_epoch = helper_valid ? helper_epoch : MEM_RSP_EPOCH;
++    assign passive_rsp_error = !helper_valid && (MEM_RSP_ERROR || mem_rsp_identity_error);
++    assign MC_RSP_READY[0] = passive_rsp_ready && !helper_valid;
++    always @(posedge MCLK or negedge MEM_HARD_RESET_N) begin
++        if(!MEM_HARD_RESET_N) begin
++            helper_delay <= 0; helper_valid <= 0;
++            helper_owner <= 0; helper_tag <= 0; helper_epoch <= 0;
++        end else begin
++            if(passive_req && passive_ready && helper_offer) begin
++                helper_owner <= MC_SNES_OWNER[0]; helper_tag <= MC_TAG[0]; helper_epoch <= MC_EPOCH[0];
++                helper_delay <= 3;
++            end else if(helper_delay != 0) begin
++                helper_delay <= helper_delay - 1'b1;
++                if(helper_delay == 1) helper_valid <= 1;
++            end
++            if(helper_valid && passive_rsp_ready) helper_valid <= 0;
++        end
++    end
+     snes_rom_client passive_client(
+         .clk(MCLK),.hard_reset_n(MEM_HARD_RESET_N),.flush(client_flush),.epoch(MEM_EPOCH),
+         .read_intent(BUS_A_READ_INTENT),.owner(BUS_A_OWNER),.selected(passive_selected),
+         .address(passive_address),.retire(BUS_A_RETIRE),.bus_wait(MC_SNES_WAIT[0]),
+         .result_data(PASSIVE_ROM_DATA),.flush_ack(MC_FLUSH_ACK[0]),.fault(MC_FAULT[0]),
+-        .req_valid(MC_VALID[0]),.req_ready(MC_READY[0]),.req_addr(MC_ADDR[0]),
++        .req_valid(passive_req),.req_ready(passive_ready),.req_addr(MC_ADDR[0]),
+         .req_owner(MC_SNES_OWNER[0]),.req_tag(MC_TAG[0]),.req_epoch(MC_EPOCH[0]),
+-        .rsp_valid(MC_RSP_VALID[0]),.rsp_ready(MC_RSP_READY[0]),.rsp_data(MEM_RSP_DATA),
+-        .rsp_owner(MEM_RSP_OWNER[1:0]),.rsp_tag(MEM_RSP_TAG),.rsp_epoch(MEM_RSP_EPOCH),
+-        .rsp_error(MEM_RSP_ERROR || mem_rsp_identity_error));
++        .rsp_valid(passive_rsp_valid),.rsp_ready(passive_rsp_ready),.rsp_data(passive_rsp_data),
++        .rsp_owner(passive_rsp_owner),.rsp_tag(passive_rsp_tag),.rsp_epoch(passive_rsp_epoch),
++        .rsp_error(passive_rsp_error));
+     assign MC_OWNER[0]=0;
+ end else begin: passive_memory_legacy
+     assign MC_VALID[0]=0;assign MC_ADDR[0]=0;assign MC_OWNER[0]=0;
+@@ -327,6 +372,7 @@ SNES #(
+ 	.cpuwr_n(CPUWR_N),
+ 
+ 	.pa(PA),
++    .pa_aram(PA_ARAM),
+ 	.pard_n(PARD_N),
+ 	.pawr_n(PAWR_N),
+ 	.di(DI),
+@@ -1177,7 +1223,6 @@ assign SUFAMI_LOOKAHEAD_ADDR=0;assign SUFAMI_LOOKAHEAD_SEL=0;
+ end
+ endgenerate
+ 
+-wire        SS_BUSY;
+ wire  [7:0] SS_DO;
+ wire [23:0] SS_ROM_ADDR;
+ 
+@@ -1206,7 +1251,9 @@ wire        CX4_SS_OK = ~MAP_ACTIVE[0] | SS_CX4_IDLE;
+ 
+ generate
+ if (USE_SS == 1'b1) begin
+-savestates ss
++savestates #(
++    .USE_ARAM_PREDECODE(USE_SS && USE_STANDARD_SDRAM)
++) ss
+ (
+ 	.reset_n(RESET_N),
+ 	.clk(MCLK),
+@@ -1230,6 +1277,7 @@ savestates ss
+ 	.cpuwr_n(CPUWR_N),
+ 
+ 	.pa(PA),
++    .pa_aram(PA_ARAM),
+ 	.pard_n(PARD_N),
+ 	.pawr_n(PAWR_N),
+ 

@@ -1,5 +1,9 @@
 # Experimental MSU-1 and standard SDRAM refresh
 
+This guide describes the pre-existing MSU/standard-memory base. The separate
+`savestate_standard_ntsc` experiment is documented in [SAVESTATE-STAGE1.md](SAVESTATE-STAGE1.md);
+its state flag and qualification must not be inferred from this historical guide.
+
 This document accompanies the proposed Pocket MSU-1/standard-memory changes.
 It describes an experimental implementation, its evidence, and reproducible
 checks. It is not a release or a claim of general game compatibility.

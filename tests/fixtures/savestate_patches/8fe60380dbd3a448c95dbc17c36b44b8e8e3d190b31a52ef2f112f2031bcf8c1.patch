@@ -1,0 +1,18 @@
+diff --git a/target/pocket/core.qip b/target/pocket/core.qip
+index 7d39116..a1c04dc 100644
+--- a/target/pocket/core.qip
++++ b/target/pocket/core.qip
+@@ -21,3 +21,13 @@ set_global_assignment -name QIP_FILE       [file join $::quartus(qip_path) "pll_
+ # Standard-refresh variants are elaborated only by USE_STANDARD_SDRAM.
+ set_global_assignment -name QIP_FILE [file join $::quartus(qip_path) "mf_pllbase_sdram.qip"]
+ set_global_assignment -name QIP_FILE [file join $::quartus(qip_path) "mf_pllbase_pal_sdram.qip"]
++
++# Experimental plain-cart state path, elaborated only by USE_SS.
++set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "savestate_controller.sv"]
++set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "savestate_rom_identity.sv"]
++set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "sram_ctrl.sv"]
++set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "aram_request_stage.sv"]
++set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "sram.sv"]
++set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "../../rtl/mister_top/savestate.sv"]
++set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "../../rtl/mister_top/psram_blob.sv"]
++set_global_assignment -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "../../rtl/mister_top/boot1_rom.sv"]

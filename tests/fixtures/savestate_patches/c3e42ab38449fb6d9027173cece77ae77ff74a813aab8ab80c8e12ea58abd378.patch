@@ -1,0 +1,27 @@
+diff --git a/rtl/upstream/CPU.vhd b/rtl/upstream/CPU.vhd
+index 3d7afe5..cfb6534 100644
+--- a/rtl/upstream/CPU.vhd
++++ b/rtl/upstream/CPU.vhd
+@@ -27,6 +27,8 @@ entity SCPU is
+ 		PA					: out std_logic_vector(7 downto 0);
+         -- Parallel B-bus $2180 predicate; raw PA and all bus phases are unchanged.
+         PA_WMDATA       : out std_logic := '0';
++        -- Parallel $2184 predicate; used only by the standard savestate profile.
++        PA_ARAM         : out std_logic := '0';
+ 		PARD_N			: out std_logic;
+ 		PAWR_N			: out std_logic;
+ 		DI					: in std_logic_vector(7 downto 0);
+@@ -512,6 +514,13 @@ begin
+                  '1' when P65_A(22) = '0' and P65_A(15 downto 0) = x"2180" and P65_EN = '1' else
+                  '0';
+ 
++    -- Same PA ownership/qualification as below, decoded before the byte mux.
++    -- Pure combinational factorization: no extra state, strobe or bus phase.
++    PA_ARAM <= '1' when (HDMA_BUS_ACTIVE = '1' or DMA_TRANSFER = '1') and EN = '1' and DMA_B = x"84" else
++               '0' when (HDMA_BUS_ACTIVE = '1' or DMA_TRANSFER = '1') and EN = '1' else
++               '1' when P65_A(22) = '0' and P65_A(15 downto 0) = x"2184" and P65_EN = '1' else
++               '0';
++
+ 	process(P65_A, EN, CPU_RD, CPU_WR, DMA_B, DMA_B_RD, DMA_B_WR, DMA_A_RD, DMA_A_WR, 
+ 			  HDMA_A_RD, HDMA_A_WR, HDMA_B_RD, HDMA_B_WR, DMA_TRANSFER, HDMA_BUS_ACTIVE, P65_EN)
+ 	begin

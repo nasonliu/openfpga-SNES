@@ -1,0 +1,29 @@
+diff --git a/tools/build_msu1.sh b/tools/build_msu1.sh
+index c4b1e05..d976215 100644
+--- a/tools/build_msu1.sh
++++ b/tools/build_msu1.sh
+@@ -9,6 +9,7 @@ Usage: tools/build_msu1.sh PROFILE
+ 
+ Profiles: msu_ntsc msu_pal ntsc pal ntsc_spc none none_pal
+ Experimental standard-refresh: msu_standard_ntsc msu_standard_pal standard_ntsc_spc
++Experimental plain SNES savestate: savestate_standard_ntsc (Sleep disabled)
+ 
+ Set QUARTUS_SH to the installed quartus_sh executable, or put it on PATH.
+ QUARTUS_ROOTDIR/bin/quartus_sh is also recognized.
+@@ -25,7 +26,7 @@ EOF
+ case "$1" in
+   -h|--help) usage; exit 0 ;;
+   --check-tools) check_only=1 ;;
+-  msu_ntsc|msu_pal|ntsc|pal|ntsc_spc|none|none_pal|msu_standard_ntsc|msu_standard_pal|standard_ntsc_spc) check_only=0; profile=$1 ;;
++  msu_ntsc|msu_pal|ntsc|pal|ntsc_spc|none|none_pal|msu_standard_ntsc|msu_standard_pal|standard_ntsc_spc|savestate_standard_ntsc) check_only=0; profile=$1 ;;
+   *) printf 'Unknown profile: %s\n' "$1" >&2; usage >&2; exit 2 ;;
+ esac
+ 
+@@ -141,6 +142,7 @@ case "$profile" in
+   msu_standard_ntsc) rev=snes_msu_standard_ntsc.rev ;;
+   msu_standard_pal) rev=snes_msu_standard_pal.rev ;;
+   standard_ntsc_spc) rev=snes_standard_spc.rev ;;
++  savestate_standard_ntsc) rev=snes_state_standard_ntsc.rev ;;
+   ntsc|none) rev=snes_main.rev ;;
+   pal|none_pal) rev=snes_pal.rev ;;
+   ntsc_spc) rev=snes_spc.rev ;;

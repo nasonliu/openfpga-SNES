@@ -77,6 +77,7 @@ class BuildWrapperTests(unittest.TestCase):
             "msu_standard_ntsc": "snes_msu_standard_ntsc.rev",
             "msu_standard_pal": "snes_msu_standard_pal.rev",
             "standard_ntsc_spc": "snes_standard_spc.rev",
+            "savestate_standard_ntsc": "snes_state_standard_ntsc.rev",
         }
         for profile, output in names.items():
             with self.subTest(profile=profile):

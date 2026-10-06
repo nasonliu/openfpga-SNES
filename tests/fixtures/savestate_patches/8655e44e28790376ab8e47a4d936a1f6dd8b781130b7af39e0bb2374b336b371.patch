@@ -1,0 +1,39 @@
+diff --git a/rtl/upstream/main.v b/rtl/upstream/main.v
+index 052ff92..bb3899a 100644
+--- a/rtl/upstream/main.v
++++ b/rtl/upstream/main.v
+@@ -193,6 +193,7 @@ wire        RAMSEL_N;
+ wire        ROMSEL_N;
+ reg         IRQ_N;
+ wire  [7:0] PA;
++wire        PA_ARAM;
+ wire        PARD_N;
+ wire        PAWR_N;
+ //wire        SYSCLKF_CE;
+@@ -371,6 +372,7 @@ SNES #(
+ 	.cpuwr_n(CPUWR_N),
+ 
+ 	.pa(PA),
++    .pa_aram(PA_ARAM),
+ 	.pard_n(PARD_N),
+ 	.pawr_n(PAWR_N),
+ 	.di(DI),
+@@ -1249,7 +1251,9 @@ wire        CX4_SS_OK = ~MAP_ACTIVE[0] | SS_CX4_IDLE;
+ 
+ generate
+ if (USE_SS == 1'b1) begin
+-savestates ss
++savestates #(
++    .USE_ARAM_PREDECODE(USE_SS && USE_STANDARD_SDRAM)
++) ss
+ (
+ 	.reset_n(RESET_N),
+ 	.clk(MCLK),
+@@ -1273,6 +1277,7 @@ savestates ss
+ 	.cpuwr_n(CPUWR_N),
+ 
+ 	.pa(PA),
++    .pa_aram(PA_ARAM),
+ 	.pard_n(PARD_N),
+ 	.pawr_n(PAWR_N),
+ 

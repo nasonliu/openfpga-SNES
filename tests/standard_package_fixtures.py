@@ -7,6 +7,7 @@ the provider does not recreate a commit object or claim its complete tree.
 import hashlib
 import json
 from pathlib import Path
+from pinned_source import reconstruct
 
 
 class SourceFixtures:
@@ -38,9 +39,15 @@ class SourceFixtures:
         for name, item in record['files'].items():
             if not any(name == prefix or name.startswith(prefix.rstrip('/') + '/') for prefix in paths):
                 continue
-            path = (self.root / name if item['location'] == 'checkout'
-                    else self.directory / 'blobs' / item['sha256'])
-            data = self.package.read_file(path, allow_empty=True)
+            if item['location'] == 'reverse_patch':
+                try:
+                    data = reconstruct(self.root, item, lambda path: self.package.read_file(path, allow_empty=True))
+                except ValueError as error:
+                    raise self.package.PackageError(str(error)) from error
+            else:
+                path = (self.root / name if item['location'] == 'checkout'
+                        else self.directory / 'blobs' / item['sha256'])
+                data = self.package.read_file(path, allow_empty=True)
             blob = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
             if (len(data) != item['bytes'] or hashlib.sha256(data).hexdigest() != item['sha256']
                     or blob != item['git_blob']):

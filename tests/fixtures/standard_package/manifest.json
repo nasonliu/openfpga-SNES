@@ -158,7 +158,8 @@
         "rtl/mister_top/SNES.sv": {
           "bytes": 36545,
           "git_blob": "7fd59efe4bd587d4388136a5e71965ecffb39dd1",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887",
           "sha256": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887"
         },
         "rtl/mister_top/rom_parser.sv": {
@@ -284,7 +285,8 @@
         "rtl/upstream/CPU.vhd": {
           "bytes": 43776,
           "git_blob": "3d7afe5c6f0e401a48fdd4d9199b5c6b84e86976",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378",
           "sha256": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378"
         },
         "rtl/upstream/DSP.vhd": {
@@ -320,7 +322,8 @@
         "rtl/upstream/SNES.vhd": {
           "bytes": 12478,
           "git_blob": "adfa7e2dd55bf581ceaae27e72347df4994953e6",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1",
           "sha256": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1"
         },
         "rtl/upstream/SPC700/ALU.vhd": {
@@ -674,7 +677,8 @@
         "rtl/upstream/main.v": {
           "bytes": 38791,
           "git_blob": "041651474fb8fbf8548ebae4a8cc56963bde78aa",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066",
           "sha256": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066"
         },
         "rtl/upstream/miracle.sv": {
@@ -722,7 +726,8 @@
         "rtl/upstream/savestates.sv": {
           "bytes": 11362,
           "git_blob": "5fc56212770af3bd66f49ae5bdee18201656756f",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c",
           "sha256": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c"
         },
         "rtl/upstream/savestates_map.sv": {
@@ -776,7 +781,8 @@
         "target/pocket/core.qip": {
           "bytes": 1965,
           "git_blob": "7d39116a09af50d387258008c10521d027da1553",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1",
           "sha256": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1"
         },
         "target/pocket/core_bridge_cmd.v": {
@@ -794,7 +800,8 @@
         "target/pocket/core_top.sv": {
           "bytes": 38707,
           "git_blob": "2085e48185785c5acd23670c458ad2fbe5801c2a",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33",
           "sha256": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33"
         },
         "target/pocket/data_loader.sv": {
@@ -1195,7 +1202,8 @@
         "rtl/mister_top/SNES.sv": {
           "bytes": 36545,
           "git_blob": "7fd59efe4bd587d4388136a5e71965ecffb39dd1",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887",
           "sha256": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887"
         },
         "rtl/mister_top/rom_parser.sv": {
@@ -1321,7 +1329,8 @@
         "rtl/upstream/CPU.vhd": {
           "bytes": 43776,
           "git_blob": "3d7afe5c6f0e401a48fdd4d9199b5c6b84e86976",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378",
           "sha256": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378"
         },
         "rtl/upstream/DSP.vhd": {
@@ -1357,7 +1366,8 @@
         "rtl/upstream/SNES.vhd": {
           "bytes": 12478,
           "git_blob": "adfa7e2dd55bf581ceaae27e72347df4994953e6",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1",
           "sha256": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1"
         },
         "rtl/upstream/SPC700/ALU.vhd": {
@@ -1711,7 +1721,8 @@
         "rtl/upstream/main.v": {
           "bytes": 38791,
           "git_blob": "041651474fb8fbf8548ebae4a8cc56963bde78aa",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066",
           "sha256": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066"
         },
         "rtl/upstream/miracle.sv": {
@@ -1759,7 +1770,8 @@
         "rtl/upstream/savestates.sv": {
           "bytes": 11362,
           "git_blob": "5fc56212770af3bd66f49ae5bdee18201656756f",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c",
           "sha256": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c"
         },
         "rtl/upstream/savestates_map.sv": {
@@ -1813,7 +1825,8 @@
         "target/pocket/core.qip": {
           "bytes": 1965,
           "git_blob": "7d39116a09af50d387258008c10521d027da1553",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1",
           "sha256": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1"
         },
         "target/pocket/core_bridge_cmd.v": {
@@ -1831,7 +1844,8 @@
         "target/pocket/core_top.sv": {
           "bytes": 38707,
           "git_blob": "2085e48185785c5acd23670c458ad2fbe5801c2a",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33",
           "sha256": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33"
         },
         "target/pocket/data_loader.sv": {
@@ -2088,7 +2102,8 @@
         "generate.tcl": {
           "bytes": 7241,
           "git_blob": "e06bdb611d4ad3590b39560d3a422fd9a405c70b",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "da4c707b664b6c1e239ecb203359a73b0c3106332b26ff6edc23e90b553dbf89",
           "sha256": "da4c707b664b6c1e239ecb203359a73b0c3106332b26ff6edc23e90b553dbf89"
         },
         "platform/pocket/apf.qip": {
@@ -2232,7 +2247,8 @@
         "rtl/mister_top/SNES.sv": {
           "bytes": 36545,
           "git_blob": "7fd59efe4bd587d4388136a5e71965ecffb39dd1",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887",
           "sha256": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887"
         },
         "rtl/mister_top/rom_parser.sv": {
@@ -2358,7 +2374,8 @@
         "rtl/upstream/CPU.vhd": {
           "bytes": 43776,
           "git_blob": "3d7afe5c6f0e401a48fdd4d9199b5c6b84e86976",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378",
           "sha256": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378"
         },
         "rtl/upstream/DSP.vhd": {
@@ -2394,7 +2411,8 @@
         "rtl/upstream/SNES.vhd": {
           "bytes": 12478,
           "git_blob": "adfa7e2dd55bf581ceaae27e72347df4994953e6",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1",
           "sha256": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1"
         },
         "rtl/upstream/SPC700/ALU.vhd": {
@@ -2748,7 +2766,8 @@
         "rtl/upstream/main.v": {
           "bytes": 38791,
           "git_blob": "041651474fb8fbf8548ebae4a8cc56963bde78aa",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066",
           "sha256": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066"
         },
         "rtl/upstream/miracle.sv": {
@@ -2796,7 +2815,8 @@
         "rtl/upstream/savestates.sv": {
           "bytes": 11362,
           "git_blob": "5fc56212770af3bd66f49ae5bdee18201656756f",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c",
           "sha256": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c"
         },
         "rtl/upstream/savestates_map.sv": {
@@ -2850,7 +2870,8 @@
         "target/pocket/core.qip": {
           "bytes": 1965,
           "git_blob": "7d39116a09af50d387258008c10521d027da1553",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1",
           "sha256": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1"
         },
         "target/pocket/core_bridge_cmd.v": {
@@ -2868,7 +2889,8 @@
         "target/pocket/core_top.sv": {
           "bytes": 38707,
           "git_blob": "2085e48185785c5acd23670c458ad2fbe5801c2a",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33",
           "sha256": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33"
         },
         "target/pocket/data_loader.sv": {
@@ -3120,7 +3142,8 @@
         "tools/build_msu1.sh": {
           "bytes": 6726,
           "git_blob": "c4b1e05c01314787d80b1b8d29d2aadd1c7e6ce6",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "11daa31dc309164662631681461a11314414cbeb0750cf3acd85e28c0b3c3830",
           "sha256": "11daa31dc309164662631681461a11314414cbeb0750cf3acd85e28c0b3c3830"
         }
       }
@@ -3275,7 +3298,8 @@
         "rtl/mister_top/SNES.sv": {
           "bytes": 36545,
           "git_blob": "7fd59efe4bd587d4388136a5e71965ecffb39dd1",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887",
           "sha256": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887"
         },
         "rtl/mister_top/rom_parser.sv": {
@@ -3401,7 +3425,8 @@
         "rtl/upstream/CPU.vhd": {
           "bytes": 43776,
           "git_blob": "3d7afe5c6f0e401a48fdd4d9199b5c6b84e86976",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378",
           "sha256": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378"
         },
         "rtl/upstream/DSP.vhd": {
@@ -3437,7 +3462,8 @@
         "rtl/upstream/SNES.vhd": {
           "bytes": 12478,
           "git_blob": "adfa7e2dd55bf581ceaae27e72347df4994953e6",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1",
           "sha256": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1"
         },
         "rtl/upstream/SPC700/ALU.vhd": {
@@ -3791,7 +3817,8 @@
         "rtl/upstream/main.v": {
           "bytes": 38791,
           "git_blob": "041651474fb8fbf8548ebae4a8cc56963bde78aa",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066",
           "sha256": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066"
         },
         "rtl/upstream/miracle.sv": {
@@ -3839,7 +3866,8 @@
         "rtl/upstream/savestates.sv": {
           "bytes": 11362,
           "git_blob": "5fc56212770af3bd66f49ae5bdee18201656756f",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c",
           "sha256": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c"
         },
         "rtl/upstream/savestates_map.sv": {
@@ -3893,7 +3921,8 @@
         "target/pocket/core.qip": {
           "bytes": 1965,
           "git_blob": "7d39116a09af50d387258008c10521d027da1553",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1",
           "sha256": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1"
         },
         "target/pocket/core_bridge_cmd.v": {
@@ -3911,7 +3940,8 @@
         "target/pocket/core_top.sv": {
           "bytes": 38707,
           "git_blob": "2085e48185785c5acd23670c458ad2fbe5801c2a",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33",
           "sha256": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33"
         },
         "target/pocket/data_loader.sv": {
@@ -4306,7 +4336,8 @@
         "rtl/mister_top/SNES.sv": {
           "bytes": 36545,
           "git_blob": "7fd59efe4bd587d4388136a5e71965ecffb39dd1",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887",
           "sha256": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887"
         },
         "rtl/mister_top/rom_parser.sv": {
@@ -4870,7 +4901,8 @@
         "rtl/upstream/savestates.sv": {
           "bytes": 11362,
           "git_blob": "5fc56212770af3bd66f49ae5bdee18201656756f",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c",
           "sha256": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c"
         },
         "rtl/upstream/savestates_map.sv": {
@@ -4924,7 +4956,8 @@
         "target/pocket/core.qip": {
           "bytes": 1965,
           "git_blob": "7d39116a09af50d387258008c10521d027da1553",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1",
           "sha256": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1"
         },
         "target/pocket/core_bridge_cmd.v": {
@@ -4942,7 +4975,8 @@
         "target/pocket/core_top.sv": {
           "bytes": 38707,
           "git_blob": "2085e48185785c5acd23670c458ad2fbe5801c2a",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33",
           "sha256": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33"
         },
         "target/pocket/data_loader.sv": {
@@ -5415,7 +5449,8 @@
         "rtl/mister_top/SNES.sv": {
           "bytes": 36545,
           "git_blob": "7fd59efe4bd587d4388136a5e71965ecffb39dd1",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887",
           "sha256": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887"
         },
         "rtl/mister_top/rom_parser.sv": {
@@ -5979,7 +6014,8 @@
         "rtl/upstream/savestates.sv": {
           "bytes": 11362,
           "git_blob": "5fc56212770af3bd66f49ae5bdee18201656756f",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c",
           "sha256": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c"
         },
         "rtl/upstream/savestates_map.sv": {
@@ -6033,7 +6069,8 @@
         "target/pocket/core.qip": {
           "bytes": 1965,
           "git_blob": "7d39116a09af50d387258008c10521d027da1553",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1",
           "sha256": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1"
         },
         "target/pocket/core_bridge_cmd.v": {
@@ -6051,7 +6088,8 @@
         "target/pocket/core_top.sv": {
           "bytes": 38707,
           "git_blob": "2085e48185785c5acd23670c458ad2fbe5801c2a",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33",
           "sha256": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33"
         },
         "target/pocket/data_loader.sv": {
@@ -6452,7 +6490,8 @@
         "rtl/mister_top/SNES.sv": {
           "bytes": 36545,
           "git_blob": "7fd59efe4bd587d4388136a5e71965ecffb39dd1",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887",
           "sha256": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887"
         },
         "rtl/mister_top/rom_parser.sv": {
@@ -6578,7 +6617,8 @@
         "rtl/upstream/CPU.vhd": {
           "bytes": 43776,
           "git_blob": "3d7afe5c6f0e401a48fdd4d9199b5c6b84e86976",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378",
           "sha256": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378"
         },
         "rtl/upstream/DSP.vhd": {
@@ -6614,7 +6654,8 @@
         "rtl/upstream/SNES.vhd": {
           "bytes": 12478,
           "git_blob": "adfa7e2dd55bf581ceaae27e72347df4994953e6",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1",
           "sha256": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1"
         },
         "rtl/upstream/SPC700/ALU.vhd": {
@@ -6968,7 +7009,8 @@
         "rtl/upstream/main.v": {
           "bytes": 38791,
           "git_blob": "041651474fb8fbf8548ebae4a8cc56963bde78aa",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066",
           "sha256": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066"
         },
         "rtl/upstream/miracle.sv": {
@@ -7016,7 +7058,8 @@
         "rtl/upstream/savestates.sv": {
           "bytes": 11362,
           "git_blob": "5fc56212770af3bd66f49ae5bdee18201656756f",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c",
           "sha256": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c"
         },
         "rtl/upstream/savestates_map.sv": {
@@ -7070,7 +7113,8 @@
         "target/pocket/core.qip": {
           "bytes": 1965,
           "git_blob": "7d39116a09af50d387258008c10521d027da1553",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1",
           "sha256": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1"
         },
         "target/pocket/core_bridge_cmd.v": {
@@ -7088,7 +7132,8 @@
         "target/pocket/core_top.sv": {
           "bytes": 38707,
           "git_blob": "2085e48185785c5acd23670c458ad2fbe5801c2a",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33",
           "sha256": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33"
         },
         "target/pocket/data_loader.sv": {
@@ -7339,7 +7384,8 @@
         "generate.tcl": {
           "bytes": 7241,
           "git_blob": "e06bdb611d4ad3590b39560d3a422fd9a405c70b",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "da4c707b664b6c1e239ecb203359a73b0c3106332b26ff6edc23e90b553dbf89",
           "sha256": "da4c707b664b6c1e239ecb203359a73b0c3106332b26ff6edc23e90b553dbf89"
         },
         "platform/pocket/apf.qip": {
@@ -7483,7 +7529,8 @@
         "rtl/mister_top/SNES.sv": {
           "bytes": 36545,
           "git_blob": "7fd59efe4bd587d4388136a5e71965ecffb39dd1",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887",
           "sha256": "0a414f346a49ded70c3036d0ae7b0cae34a35a39f8f53c72af9c1286e71f0887"
         },
         "rtl/mister_top/rom_parser.sv": {
@@ -7609,7 +7656,8 @@
         "rtl/upstream/CPU.vhd": {
           "bytes": 43776,
           "git_blob": "3d7afe5c6f0e401a48fdd4d9199b5c6b84e86976",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378",
           "sha256": "c3e42ab38449fb6d9027173cece77ae77ff74a813aab8ab80c8e12ea58abd378"
         },
         "rtl/upstream/DSP.vhd": {
@@ -7645,7 +7693,8 @@
         "rtl/upstream/SNES.vhd": {
           "bytes": 12478,
           "git_blob": "adfa7e2dd55bf581ceaae27e72347df4994953e6",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1",
           "sha256": "6552c9a7ed040d426c8799bad040c1c498487d01f533392334f83ec07ed606e1"
         },
         "rtl/upstream/SPC700/ALU.vhd": {
@@ -7999,7 +8048,8 @@
         "rtl/upstream/main.v": {
           "bytes": 38791,
           "git_blob": "041651474fb8fbf8548ebae4a8cc56963bde78aa",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066",
           "sha256": "1c200ca31a060df8d1c69334bee5a5e8375eca93f2eb4727fd3ab9ec8b20c066"
         },
         "rtl/upstream/miracle.sv": {
@@ -8047,7 +8097,8 @@
         "rtl/upstream/savestates.sv": {
           "bytes": 11362,
           "git_blob": "5fc56212770af3bd66f49ae5bdee18201656756f",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c",
           "sha256": "56948fb529cccb3602033a165b83172e0685bdcf316772f8c9c01ad093b7a49c"
         },
         "rtl/upstream/savestates_map.sv": {
@@ -8101,7 +8152,8 @@
         "target/pocket/core.qip": {
           "bytes": 1965,
           "git_blob": "7d39116a09af50d387258008c10521d027da1553",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1",
           "sha256": "8fe60380dbd3a448c95dbc17c36b44b8e8e3d190b31a52ef2f112f2031bcf8c1"
         },
         "target/pocket/core_bridge_cmd.v": {
@@ -8119,7 +8171,8 @@
         "target/pocket/core_top.sv": {
           "bytes": 38707,
           "git_blob": "2085e48185785c5acd23670c458ad2fbe5801c2a",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33",
           "sha256": "9c2a219fe3784510623aa78c251d8e139eeadaa963b5d709f1e8e8edd21b2c33"
         },
         "target/pocket/data_loader.sv": {
@@ -8371,7 +8424,8 @@
         "tools/build_msu1.sh": {
           "bytes": 6726,
           "git_blob": "c4b1e05c01314787d80b1b8d29d2aadd1c7e6ce6",
-          "location": "checkout",
+          "location": "reverse_patch",
+          "patch_recipe": "11daa31dc309164662631681461a11314414cbeb0750cf3acd85e28c0b3c3830",
           "sha256": "11daa31dc309164662631681461a11314414cbeb0750cf3acd85e28c0b3c3830"
         }
       }
@@ -8406,6 +8460,22 @@
         "qualification_state": "unverified_candidate"
       }
     }
+  },
+  "savestate_extension": {
+    "extracted_from_public_commit": "44442443508356dbc362c6c34304a51cc5b5ba16",
+    "paths": [
+      "generate.tcl",
+      "rtl/mister_top/SNES.sv",
+      "rtl/upstream/CPU.vhd",
+      "rtl/upstream/SNES.vhd",
+      "rtl/upstream/main.v",
+      "rtl/upstream/savestates.sv",
+      "target/pocket/core.qip",
+      "target/pocket/core_top.sv",
+      "tools/build_msu1.sh"
+    ],
+    "reason": "The savestate branch changes these previously shared checkout paths. Preserve their already registered hashes and bytes as independent test-only blobs.",
+    "storage": "Exact reverse patches from hash-pinned current source; git apply -R --check and apply in a disposable directory without .git; reconstructed bytes retain all registered baseline hashes."
   },
   "scope": "Test-only immutable source snapshots; production packaging still requires real Git evidence."
 }
