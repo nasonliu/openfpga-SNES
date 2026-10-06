@@ -1,0 +1,102 @@
+{
+  "pr": "https://github.com/agg23/openfpga-SNES/pull/113",
+  "pr_head": "9d76821c0d8330b7e6929f49a69faa7fa763a963",
+  "upstream": "23026830ff8108fda0f32c0616296845f586b8ce",
+  "files": [
+    {
+      "path": "rtl/mister_top/savestate.sv",
+      "source_url": "https://github.com/drizzt/openfpga-SNES/blob/9d76821c0d8330b7e6929f49a69faa7fa763a963/rtl/mister_top/savestate.sv",
+      "source_blob_sha": "8a8806aeeed16d5068b8202b57ef62284ed4d5cd",
+      "source_sha256": "58a2c1e935cbe909283a48ebafcf32e906567e5148993fd1514bfdc9619950aa",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": true
+    },
+    {
+      "path": "rtl/mister_top/psram_blob.sv",
+      "source_url": "https://github.com/drizzt/openfpga-SNES/blob/9d76821c0d8330b7e6929f49a69faa7fa763a963/rtl/mister_top/psram_blob.sv",
+      "source_blob_sha": "54c9e70fdfd1260fce222069b9123d0be9707254",
+      "source_sha256": "bfd09ca1f4c45ec801575f35e7b49c0088af0baa7e9240eee6b7b54b14bbed18",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": true
+    },
+    {
+      "path": "rtl/mister_top/boot1_rom.sv",
+      "source_url": "https://github.com/drizzt/openfpga-SNES/blob/9d76821c0d8330b7e6929f49a69faa7fa763a963/rtl/mister_top/boot1_rom.sv",
+      "source_blob_sha": "607d0caff3fb7882c3dce0262bbbde1792b4a2de",
+      "source_sha256": "8d089a18a4f36151199d1979e0138bff0e8a11767f956d3f0e3cd3a365e9b1fd",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": false
+    },
+    {
+      "path": "target/pocket/sram_ctrl.sv",
+      "source_url": "https://github.com/drizzt/openfpga-SNES/blob/9d76821c0d8330b7e6929f49a69faa7fa763a963/target/pocket/sram_ctrl.sv",
+      "source_blob_sha": "05d18911d74db7837f58f5be51501e208a6d7e58",
+      "source_sha256": "a927921b9fcc2a5a57f769a5bba47278ebaa1b70ddfddc20fe2b478fabe6fc30",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": true
+    },
+    {
+      "path": "target/pocket/sram.sv",
+      "source_url": "https://github.com/drizzt/openfpga-SNES/blob/9d76821c0d8330b7e6929f49a69faa7fa763a963/target/pocket/sram.sv",
+      "source_blob_sha": "aebbc71b9dd9a1ae7fe737ad680aed15e20dc10d",
+      "source_sha256": "1facbe109127f5f56567764d0b974ea174b01d84331d08753987edd76d4eb129",
+      "license": "MIT (see docs/licenses/openfpga-litex-MIT.txt)",
+      "modified": true
+    },
+    {
+      "path": "rtl/upstream/releases/boot1.rom",
+      "source_url": "https://github.com/MiSTer-devel/SNES_MiSTer/blob/23026830ff8108fda0f32c0616296845f586b8ce/releases/boot1.rom",
+      "source_blob_sha": "097050f1421bea2d4f51ca234e2088317ed91bb7",
+      "source_sha256": "109b065d87989fae5d010040acfa6147160b8c8d3df50ab8cdabe7776e153001",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": false
+    },
+    {
+      "path": "rtl/upstream/src/savestates.asm",
+      "source_url": "https://github.com/MiSTer-devel/SNES_MiSTer/blob/23026830ff8108fda0f32c0616296845f586b8ce/src/savestates.asm",
+      "source_blob_sha": "0b95d5c371ce178a7fc5b589ebfae4c020fc0412",
+      "source_sha256": "5824ca2a5b937562246e2af26051b31ce640d5cfbc2fffe38a3eb277bdbdd97d",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": false
+    },
+    {
+      "path": "rtl/upstream/src/savestates_cx4.asm",
+      "source_url": "https://github.com/MiSTer-devel/SNES_MiSTer/blob/23026830ff8108fda0f32c0616296845f586b8ce/src/savestates_cx4.asm",
+      "source_blob_sha": "e660cc68a8e134b8f6594f3d260f32c2d64a4d56",
+      "source_sha256": "84a27ffeea882261fa4114bfbf38dc723739dc664c001d72b2788132c0eb9217",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": false
+    },
+    {
+      "path": "rtl/upstream/src/savestates_dspn.asm",
+      "source_url": "https://github.com/MiSTer-devel/SNES_MiSTer/blob/23026830ff8108fda0f32c0616296845f586b8ce/src/savestates_dspn.asm",
+      "source_blob_sha": "a0f3adc07c7b68dccbde1f7ac91fe504954afb36",
+      "source_sha256": "1aaf5d7f5378fd7c73262e8df1f2e508e1d9f9077292de1a7a6fb8537ffa6c31",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": false
+    },
+    {
+      "path": "rtl/upstream/src/savestates_gsu.asm",
+      "source_url": "https://github.com/MiSTer-devel/SNES_MiSTer/blob/23026830ff8108fda0f32c0616296845f586b8ce/src/savestates_gsu.asm",
+      "source_blob_sha": "c3fbdc3b239e88426ea79bb5c8a3a2cca526560c",
+      "source_sha256": "165f36713c708abc426e97734d220a6c224e661666e644650e88c66d07b826fd",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": false
+    },
+    {
+      "path": "rtl/upstream/src/savestates_sa1.asm",
+      "source_url": "https://github.com/MiSTer-devel/SNES_MiSTer/blob/23026830ff8108fda0f32c0616296845f586b8ce/src/savestates_sa1.asm",
+      "source_blob_sha": "8e0a9e18f9bdb50fb3f7538a35cad28630a35f41",
+      "source_sha256": "f68899dfc64e57a7934f50b08dfe47c8856841396fdf88cda631e2e9a70136ff",
+      "license": "GPL-3.0 (repository LICENSE)",
+      "modified": false
+    }
+  ],
+  "reference_helper": {
+    "commit": "19d95419fdf98b2382fc36912ba3ea4c2b002d4c",
+    "git_blob_sha": "d899af9bcd3bfd8c51fe5ba5dc5d71c858063d54",
+    "sha256": "d292cb38abf3faa8b95ef04afc805f0860070e39df6810d3ec36b620939098df",
+    "bytes": 3107,
+    "used": false
+  }
+}

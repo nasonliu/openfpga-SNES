@@ -84,3 +84,7 @@ __pycache__/
 # Generated audio-audit executables/logs (final reports are archived separately)
 tests/audio_memory_audit/preflight/
 tests/audio_memory_audit/results/
+
+# Deterministic savestate helper initializers (generated before build/tests)
+/rtl/mister_top/boot1.hex
+/rtl/mister_top/boot1.mif
