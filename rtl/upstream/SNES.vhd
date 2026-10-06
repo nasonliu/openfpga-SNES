@@ -34,6 +34,7 @@ entity SNES is
 		CPUWR_N		: out std_logic;
 		
 		PA				: out std_logic_vector(7 downto 0);
+        PA_ARAM     : out std_logic := '0';
 		PARD_N		: out std_logic;
 		PAWR_N		: out std_logic;
 		DI				: in std_logic_vector(7 downto 0);
@@ -255,6 +256,7 @@ begin
 		CPUWR_N		=> INT_CPUWR_N,
 		PA				=> INT_PA,
         PA_WMDATA   => INT_PA_WMDATA,
+        PA_ARAM     => PA_ARAM,
 		PARD_N		=> INT_PARD_N,
 		PAWR_N		=> INT_PAWR_N,
 		DI				=> GENIE_DI,

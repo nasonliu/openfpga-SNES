@@ -13,7 +13,7 @@ if { $argc != 1 } {
 
 set generator_root [file dirname [file normalize [info script]]]
 set requested_profile [lindex $argv 0]
-if {$requested_profile ni {ntsc pal ntsc_spc none none_pal msu_ntsc msu_pal msu_standard_ntsc msu_standard_pal standard_ntsc_spc}} {
+if {$requested_profile ni {ntsc pal ntsc_spc none none_pal msu_ntsc msu_pal msu_standard_ntsc msu_standard_pal standard_ntsc_spc savestate_standard_ntsc}} {
   puts "Unknown bitstream type $requested_profile"
   exit 2
 }
@@ -23,10 +23,19 @@ if {[info exists ::env(MSU1_OUTPUT_DIR)]} {
   set_global_assignment -name PROJECT_OUTPUT_DIRECTORY $::env(MSU1_OUTPUT_DIR)
 }
 set msu_profile [expr {$requested_profile in {msu_ntsc msu_pal msu_standard_ntsc msu_standard_pal}}]
-set standard_sdram_profile [expr {$requested_profile in {msu_standard_ntsc msu_standard_pal standard_ntsc_spc}}]
+set standard_sdram_profile [expr {$requested_profile in {msu_standard_ntsc msu_standard_pal standard_ntsc_spc savestate_standard_ntsc}}]
 if {$requested_profile in {msu_ntsc msu_standard_ntsc}} {set argv [list ntsc]}
 if {$requested_profile in {msu_pal msu_standard_pal}} {set argv [list pal]}
 if {$requested_profile eq "standard_ntsc_spc"} {set argv [list ntsc_spc]}
+set savestate_profile [expr {$requested_profile eq "savestate_standard_ntsc"}]
+if {$savestate_profile} {set argv [list none]}
+set_parameter -name USE_SS -entity core_top $savestate_profile
+set_parameter -name USE_SS -entity MAIN_SNES $savestate_profile
+source [file join $generator_root target pocket savestate_sram_load.tcl]
+configure_savestate_sram_load $savestate_profile
+if {$savestate_profile} {
+  if {[catch {exec python3 [file join $generator_root tools generate_savestate_rom.py]} message]} {error $message}
+}
 set_parameter -name USE_MSU_POCKET -entity core_top $msu_profile
 set_parameter -name USE_STANDARD_SDRAM -entity core_top $standard_sdram_profile
 # Apply only the dedicated standard-profile I/O packing candidate; remove its

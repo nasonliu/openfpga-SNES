@@ -106,6 +106,22 @@ module MAIN_SNES (
 
     output reg [3:0] sram_size,
 
+    // Experimental plain-cart savestates; ports are inert when USE_SS=0.
+    input wire ss_save, ss_load, ss_ctrl_idle, ss_lock, ss_abort, ss_stage_clear,
+    input wire [19:0] ss_payload_size,
+    output wire ss_busy, ss_avail, ss_core_reset, ss_storage_fault,
+    output wire ss_stage_lost, ss_stage_idle, ss_stage_complete, ss_transport_idle, ss_save_complete,
+    output wire [31:0] ss_payload_checksum,
+    input wire ss_stage_wr,
+    input wire [19:0] ss_stage_addr,
+    input wire [15:0] ss_stage_data,
+    input wire ss_blob_rd,
+    input wire [19:0] ss_blob_addr,
+    output wire [15:0] ss_blob_q,
+    output wire [16:0] sram_a,
+    inout wire [15:0] sram_dq,
+    output wire sram_oe_n, sram_we_n, sram_ub_n, sram_lb_n,
+
     // SDRAM
     output wire [12:0] dram_a,
     output wire [ 1:0] dram_ba,
@@ -501,18 +517,19 @@ module MAIN_SNES (
       .AUDIO_R(audio_r),
 
       // New upstream ports since fork — tied to safe defaults
-      .RAM_SIZE(4'b0),
+      .RAM_SIZE(USE_SS ? ram_size : 4'b0),
       .GSU_FASTROM(1'b0),
       .SUFAMI_SWAP(1'b0),
       .CC_DIP(8'b0),
       .DSP_FREQ(1'b0),
       .MSU_AUDIO_SECTOR(msu_audio_sector),
-      .SS_SAVE(1'b0),
-      .SS_TOSD(1'b0),
-      .SS_LOAD(1'b0),
+      .SS_SAVE(ss_save),
+      .SS_TOSD(1'b1),
+      .SS_LOAD(ss_load),
       .SS_SLOT(2'b0),
-      .SS_DDR_DI(64'b0),
-      .SS_DDR_ACK(1'b0),
+      .SS_DDR_DI(ss_ddr_di),
+      .SS_DDR_ACK(ss_ddr_ack),
+      .SS_BUSY(ss_busy),
 
       // Outputs — unconnected
       .SYSCLKR_CE(),
@@ -522,16 +539,47 @@ module MAIN_SNES (
       .SNI_JOY(),
       .MSU_AUDIO_RESUME(msu_audio_resume),
       .MSU_RESUME_SECTOR(msu_resume_sector),
-      .SS_AVAIL(),
-      .SS_DDR_DO(),
-      .SS_DDR_ADDR(),
-      .SS_DDR_WE(),
-      .SS_DDR_BE(),
-      .SS_DDR_REQ()
+      .SS_AVAIL(ss_engine_avail),
+      .SS_DDR_DO(ss_ddr_do),
+      .SS_DDR_ADDR(ss_ddr_addr),
+      .SS_DDR_WE(ss_ddr_we),
+      .SS_DDR_BE(ss_ddr_be),
+      .SS_DDR_REQ(ss_ddr_req)
   );
 
+  wire [63:0] ss_ddr_di, ss_ddr_do;
+  wire [21:3] ss_ddr_addr;
+  wire [7:0] ss_ddr_be;
+  wire ss_ddr_ack, ss_ddr_we, ss_ddr_req, ss_engine_avail;
+  // Scope is deliberately narrower than upstream's chip eligibility.
+  assign ss_avail = USE_SS && USE_STANDARD_SDRAM && ss_engine_avail &&
+                    rom_type <= 8'h01 && rom_size <= 4'd12 && ram_size <= 4'd7 && !PAL;
+  assign ss_core_reset = !RESET_N;
+  generate if(USE_SS) begin: g_savestate_storage
+    savestate ss_mem(
+      .clk_sys(clk_sys),.clk_mem(clk_mem_85_9),.reset_n(RESET_N),.abort(ss_abort),
+      .save_begin(ss_save),.stage_clear(ss_stage_clear),.stage_expected_bytes(ss_payload_size),
+      .ss_ddr_do(ss_ddr_do),.ss_ddr_addr(ss_ddr_addr),.ss_ddr_be(ss_ddr_be),
+      .ss_ddr_we(ss_ddr_we),.ss_ddr_req(ss_ddr_req),.ss_ddr_di(ss_ddr_di),.ss_ddr_ack(ss_ddr_ack),
+      .ss_busy(ss_busy),.blocked(cart_download),.ctrl_idle(ss_ctrl_idle),
+      .stage_lost(ss_stage_lost),.stage_idle(ss_stage_idle),.stage_complete(ss_stage_complete),
+      .transport_idle(ss_transport_idle),.fault(ss_storage_fault),.saved_payload_checksum(ss_payload_checksum),
+      .save_complete(ss_save_complete),
+      .stage_wr(ss_stage_wr),.stage_addr(ss_stage_addr),.stage_data(ss_stage_data),
+      .blob_rd(ss_blob_rd),.blob_addr(ss_blob_addr),.blob_q(ss_blob_q),
+      .cram_a(cram1_a),.cram_dq(cram1_dq),.cram_wait(cram1_wait),.cram_clk(cram1_clk),
+      .cram_adv_n(cram1_adv_n),.cram_cre(cram1_cre),.cram_ce0_n(cram1_ce0_n),.cram_ce1_n(cram1_ce1_n),
+      .cram_oe_n(cram1_oe_n),.cram_we_n(cram1_we_n),.cram_ub_n(cram1_ub_n),.cram_lb_n(cram1_lb_n));
+  end else begin: g_no_savestate_storage
+    assign ss_ddr_di=0; assign ss_ddr_ack=0; assign ss_blob_q=0;
+    assign ss_stage_lost=0; assign ss_stage_idle=1; assign ss_stage_complete=0;
+    assign ss_transport_idle=1; assign ss_storage_fault=0; assign ss_payload_checksum=0; assign ss_save_complete=0;
+    assign sram_a=0; assign sram_dq=16'hzzzz;
+    assign sram_oe_n=1; assign sram_we_n=1; assign sram_ub_n=1; assign sram_lb_n=1;
+  end endgenerate
+
   wire reset = core_reset | cart_download | spc_download | bk_loading | ram_clear_busy | msu_data_download |
-               (USE_STANDARD_SDRAM && save_busy) |
+               (USE_STANDARD_SDRAM && save_busy && !(USE_SS && ss_lock)) |
                (parser_delay != 0) | (USE_STANDARD_SDRAM && !standard_run_ready);
 
   reg RESET_N = 0;
@@ -569,11 +617,11 @@ module MAIN_SNES (
     );
     // Independent address input: sd_buff_addr is selected by the actual sd_wr
     // pulse and must never feed back into the credit that creates that pulse.
-    assign save_write_ready = frontier_credit && standard_host_quiescent &&
+    assign save_write_ready = !(USE_SS && ss_lock) && frontier_credit && standard_host_quiescent &&
                               !ioctl_image_begin && !ioctl_fault && !sd_rd;
     // The queue holds an ordered read fence while this physical barrier closes.
     // It does not ask for FIFO empty, which would deadlock on the fence itself.
-    assign save_backup_ready = standard_host_quiescent && !ram_clear_busy &&
+    assign save_backup_ready = !(USE_SS && ss_lock) && standard_host_quiescent && !ram_clear_busy &&
                                !wram_psram_busy && !aram_psram_busy &&
                                !ioctl_image_begin && !ioctl_fault && !sd_rd;
   end else begin : legacy_ram_clear
@@ -631,7 +679,7 @@ module MAIN_SNES (
     assign ROM_Q=16'b0;
     sdram_cart_port cart_memory(
       .clk_sys(clk_sys),.clk_sdram(clk_sdram),.hard_reset_n(1'b1),.pll_locked(pll_locked),
-      .soft_reset(core_reset || save_busy || ram_clear_busy),.download_active(cart_download),.download_complete(ioctl_image_complete),
+      .soft_reset(core_reset || (save_busy && !(USE_SS && ss_lock)) || ram_clear_busy),.download_active(cart_download),.download_complete(ioctl_image_complete),
       .download_fault(ioctl_fault),
       .download_valid(ioctl_valid),.download_ready(ioctl_ready),
       .download_addr(ioctl_addr),.download_data(ioctl_dout),
@@ -811,6 +859,28 @@ module MAIN_SNES (
   wire [ 7:0] aram_data = clearing_ram ? aram_fill_data : ARAM_D;
   wire [15:0] aram_16_data = psram_aram_addr[0] ? {aram_data, 8'h0} : {8'h0, aram_data};
 
+  generate if(USE_SS) begin: g_state_aram_sram
+    wire stage_write,stage_read,physical_busy;
+    wire [15:0] stage_addr;
+    wire [7:0] stage_data;
+    aram_request_stage request_stage(
+      .clk_sys(clk_sys),.reset_n(pll_locked),
+      .write_en(clearing_ram ? 1'b1 : (block_ram_clients || !RESET_N) ? 1'b0 : ~ARAM_CE_N & ~ARAM_WE_N),
+      .read_en((block_ram_clients || !RESET_N) ? 1'b0 : ~ARAM_CE_N & ~ARAM_OE_N),
+      .address(psram_aram_addr),.data(aram_data),
+      .memory_write(stage_write),.memory_read(stage_read),.memory_address(stage_addr),.memory_data(stage_data));
+    // A half-cycle request can remain queued after the upstream client stops.
+    // Both it and the physical operation must drain before clear/save barriers.
+    assign aram_psram_busy = physical_busy || stage_write || stage_read;
+    sram_ctrl aram(
+      .clk(clk_mem_85_9),.reset_n(pll_locked),.addr(stage_addr[15:1]),
+      .write_en(stage_write),.read_en(stage_read),
+      .data_in(stage_addr[0] ? {stage_data,8'b0} : {8'b0,stage_data}),
+      .write_high_byte(stage_addr[0]),.write_low_byte(~stage_addr[0]),
+      .data_out(aram_16_out),.busy(physical_busy),
+      .sram_a(sram_a),.sram_dq(sram_dq),.sram_oe_n(sram_oe_n),.sram_we_n(sram_we_n),
+      .sram_ub_n(sram_ub_n),.sram_lb_n(sram_lb_n));
+  end else begin: g_original_aram_psram
   psram #(
       .CLOCK_SPEED(85.9)
   ) aram (
@@ -843,6 +913,8 @@ module MAIN_SNES (
       .cram_ub_n(cram1_ub_n),
       .cram_lb_n(cram1_lb_n)
   );
+
+  end endgenerate
 
   localparam BSRAM_BITS = 17;  // 1Mbits
   wire [19:0] BSRAM_ADDR;

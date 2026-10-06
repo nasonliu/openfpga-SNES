@@ -1,4 +1,6 @@
-module savestates
+module savestates #(
+    parameter USE_ARAM_PREDECODE = 1'b0
+)
 (
 	input reset_n,
 	input clk,
@@ -23,6 +25,7 @@ module savestates
 	input             cpuwr_n,
 
 	input       [7:0] pa,
+    input             pa_aram,
 	input             pard_n,
 	input             pawr_n,
 
@@ -200,6 +203,13 @@ always @(posedge clk) begin
 		ss_ext_addr <= 0;
 		ss_ext_addr_inc <= 0;
 		ddr_state <= DDR_IDLE;
+		ddr_req <= 0;
+		ddr_we <= 0;
+		ddr_be <= 8'hff;
+		ddr_do <= 0;
+		ss_ddr_addr <= 0;
+		ss_data_size <= 0;
+		ss_slot <= 0;
 	end else begin
 		if (~(load_en | save_en)) begin
 			if (~save_old & save) begin
@@ -483,7 +493,8 @@ end
 assign ss_do_ovr = ss_busy & ss_oe;
 assign ss_rom_ovr = map_active ? map_rom_ovr : ss_busy;
 
-assign aram_sel = ss_busy & (pa == 8'h84);
+// Keep the original selector in every legacy/non-standard instantiation.
+assign aram_sel = ss_busy & (USE_ARAM_PREDECODE ? pa_aram : (pa == 8'h84));
 assign dsp_regs_sel = ss_busy & (pa == 8'h85);
 assign smp_regs_sel = ss_busy & (pa == 8'h86);
 assign bsram_sel = ss_busy & (pa == 8'h87);
